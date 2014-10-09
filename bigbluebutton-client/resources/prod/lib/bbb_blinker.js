@@ -1,5 +1,5 @@
 function setTitle(title){
-    document.title= "BigBlueButton - " + title;
+    document.title= "Quick Visuals Pro - " + title;
 }
 
 var i = 1;

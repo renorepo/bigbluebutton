@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
 <layouts>
+  <layout name="Quick Visuals Pro">
+    <window name="NotesWindow" hidden="true" width="0.7" height="1" x="0" y="0" draggable="false" resizable="false"/>
+    <window name="BroadcastWindow" hidden="true" draggable="false" resizable="false"/>
+    <window name="VideoDock" minimized="true" />
+    <window name="ChatWindow" width="0.2923611111111111" height="0.4640957446808511" x="0.7048611111111112" y="0.535904255319149" />
+    <window name="PresentationWindow" width="0.7027777777777777" height="0.9986702127659575" x="0" y="0" />
+    <window name="UsersWindow" width="0.2923611111111111" height="0.5305851063829787" x="0.7048611111111112" y="0" />
+  </layout>
   <layout name="Default Layout"  default="true">
     <window name="NotesWindow" hidden="true" width="0.7" height="1" x="0" y="0" draggable="false" resizable="false"/>
     <window name="BroadcastWindow" hidden="true" draggable="false" resizable="false"/>

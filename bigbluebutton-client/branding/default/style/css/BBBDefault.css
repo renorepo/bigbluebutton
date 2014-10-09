@@ -1,5 +1,5 @@
 Application {
-  backgroundColor: #ffffff;
+  backgroundColor: #e8e5e1;
 }
 
 ApplicationControlBar {
@@ -24,9 +24,9 @@ Panel {
 }
 
 ToolTip {
-	borderSkin      : ClassReference("org.bigbluebutton.skins.ToolTipSkin");
-	backgroundAlpha : 0.9;
-	cornerRadius    : 3;
+  borderSkin      : ClassReference("org.bigbluebutton.skins.ToolTipSkin");
+  backgroundAlpha : 0.9;
+  cornerRadius    : 3;
 }
 
 .mypanelTitle {
@@ -36,7 +36,7 @@ ToolTip {
 }
 
 .whiteboardToolbarStyle {
-  backgroundColor: #CCCCCC;
+  backgroundColor: #93a0b1;
   cornerRadius: 5;
   borderStyle: solid;
   borderThickness: 1;
@@ -72,7 +72,7 @@ Button, .logoutButtonStyle, .chatSendButtonStyle, .helpLinkButtonStyle, .cameraD
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   themeColor: haloBlue;
   fontFamily: Arial;
   fontSize: 12;
@@ -165,7 +165,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   themeColor: haloBlue;
   fontFamily: Arial;
   fontSize: 12;
@@ -259,7 +259,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   themeColor: haloBlue;
   fontFamily: Arial;
   fontSize: 12;
@@ -274,7 +274,7 @@ DataGrid {
 }
 
 .presentationBackButtonDisabledStyle {
-	icon:   Embed('assets/images/left-arrow-disabled.png'); 
+  icon:   Embed('assets/images/left-arrow-disabled.png'); 
 }
 
 .presentationForwardButtonStyle {
@@ -282,7 +282,7 @@ DataGrid {
 }
 
 .presentationForwardButtonDisabledStyle {
-	icon:   Embed('assets/images/right-arrow-disabled.png'); 
+  icon:   Embed('assets/images/right-arrow-disabled.png'); 
 }
 
 .presentationFitToWidthButtonStyle {
@@ -303,7 +303,7 @@ DataGrid {
   tickColor: #6cccff;
   showTrackHighlight: true;
   invertThumbDirection: false;
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   trackColors: #aaaaaa, #aaaaaa;
   themeColor: haloBlue;
   fillAlphas: 1, 1, 1, 1;
@@ -322,7 +322,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 17;
 }
 
@@ -332,7 +332,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 17;
 }
 
@@ -343,7 +343,7 @@ DataGrid {
   color: #ffffff;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 17;
   icon:   Embed('assets/images/webcam-muted.png');
 }
@@ -365,7 +365,7 @@ DataGrid {
 }
 
 .presentationFileUploadWindowStyle {
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   borderAlpha: 1;
   borderThicknessLeft: 10;
   borderThicknessTop: 0;
@@ -375,8 +375,8 @@ DataGrid {
   cornerRadius: 5;
   headerHeight: 20;
   backgroundAlpha: 1;
-  headerColors: #b9babc, #b9babc;
-  footerColors: #b9babc, #b9babc;
+  headerColors: #93a0b1, #93a0b1;
+  footerColors: #93a0b1, #93a0b1;
   backgroundColor: #EFEFEF;
   dropShadowEnabled: true;
   titleStyleName: "presentationFileUploadWindowTitleStyle";
@@ -400,7 +400,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 5;  
 }
 
@@ -410,7 +410,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 5;    
 }
 
@@ -420,7 +420,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 5;  
 }
 
@@ -430,7 +430,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 5;    
   icon:   Embed('assets/images/trash.png');
 }
@@ -448,18 +448,18 @@ DataGrid {
 }
 
 .presentationUploadFileFormatHintBoxStyle, .desktopShareUsingChromeOnMacHintBoxStyle {
-	backgroundColor: #D4D4D4;
-	dropShadowEnabled: false;
-	paddingLeft: 10;
-	paddingRight: 10
+  backgroundColor: #D4D4D4;
+  dropShadowEnabled: false;
+  paddingLeft: 10;
+  paddingRight: 10
 }
 
 .presentationUploadFileFormatHintTextStyle, .desktopShareUsingChromeOnMacHintTextStyle {
-	fontWeight: bold;
+  fontWeight: bold;
 }
 
 .cameraDisplaySettingsWindowStyle {
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   borderAlpha: 1;
   borderThicknessLeft: 10;
   borderThicknessTop: 0;
@@ -469,15 +469,15 @@ DataGrid {
   cornerRadius: 5;
   headerHeight: 20;
   backgroundAlpha: 1;
-  headerColors: #b9babc, #b9babc;
-  footerColors: #b9babc, #b9babc;
+  headerColors: #93a0b1, #93a0b1;
+  footerColors: #93a0b1, #93a0b1;
   backgroundColor: #EFEFEF;
   dropShadowEnabled: true;
   titleStyleName: "webcamSettingsWindowTitleStyle";
 }
 
 .micSettingsWindowStyle {
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   borderAlpha: 1;
   borderThicknessLeft: 10;
   borderThicknessTop: 0;
@@ -487,8 +487,8 @@ DataGrid {
   cornerRadius: 5;
   headerHeight: 20;
   backgroundAlpha: 1;
-  headerColors: #b9babc, #b9babc;
-  footerColors: #b9babc, #b9babc;
+  headerColors: #93a0b1, #93a0b1;
+  footerColors: #93a0b1, #93a0b1;
   backgroundColor: #EFEFEF;
   dropShadowEnabled: true;
   titleStyleName: "micSettingsWindowTitleStyle";
@@ -518,20 +518,20 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 5;      
 }
 
 .micSettingsWindowJoinButtonStyle {
-	fillAlphas: 1, 1, 1, 1;
-	fillColors: #fefeff, #e1e2e5, #ffffff, #eeeeee;
-	rollOverColor: #eeeeee;
-	color: #5e5f63;
-	textRollOverColor: #5e5f63;
-	textSelectedColor: #5e5f63;
-	borderColor: #b9babc;  
-	cornerRadius: 5; 
-	icon:   Embed('assets/images/headset.png');
+  fillAlphas: 1, 1, 1, 1;
+  fillColors: #fefeff, #e1e2e5, #ffffff, #eeeeee;
+  rollOverColor: #eeeeee;
+  color: #5e5f63;
+  textRollOverColor: #5e5f63;
+  textSelectedColor: #5e5f63;
+  borderColor: #93a0b1;  
+  cornerRadius: 5; 
+  icon:   Embed('assets/images/headset.png');
 }
 
 .micSettingsWindowCancelButtonStyle {
@@ -541,7 +541,7 @@ DataGrid {
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
-  borderColor: #b9babc;  
+  borderColor: #93a0b1;  
   cornerRadius: 5;    
 }
 
@@ -550,46 +550,46 @@ DataGrid {
 }
 
 .micSettingsWindowHelpButtonStyle {
-	paddingLeft: 4;
-	paddingRight: 4;
-	paddingTop: 2;
-	paddingBottom: 2;
-	fontSize: 16;
-	rollOverColor: #cccccc;
-	selectionColor: #999999;
-	color: #504f3d;
-	textRollOverColor: #ffffff;
-	textSelectedColor: #ffffff;
-	fontWeight: bold;
+  paddingLeft: 4;
+  paddingRight: 4;
+  paddingTop: 2;
+  paddingBottom: 2;
+  fontSize: 16;
+  rollOverColor: #cccccc;
+  selectionColor: #999999;
+  color: #504f3d;
+  textRollOverColor: #ffffff;
+  textSelectedColor: #ffffff;
+  fontWeight: bold;
 }
 
 MDIWindow { /*None of the following properties are overridden by the MDIWindow class*/
-	backgroundSize: '100%';
-	
-	cornerRadius: 5;
-	dropShadowEnabled: false;
-	titleStyleName: "mypanelTitle";
-	
-	cornerResizeImg: Embed(source="assets/swf/Blue.swf", symbol="Corner_Resize");
-	cornerResizeWidth: 2;
-	cornerResizeHeight: 2;
-	cornerResizePaddingRight: 2;
-	cornerResizePaddingBottom: 2;
-	
-	controlButtonWidth: 10;
-	controlButtonHeight: 10;
-	controlButtonGap: 4;
+  backgroundSize: '100%';
+  
+  cornerRadius: 5;
+  dropShadowEnabled: false;
+  titleStyleName: "mypanelTitle";
+  
+  cornerResizeImg: Embed(source="assets/swf/Blue.swf", symbol="Corner_Resize");
+  cornerResizeWidth: 2;
+  cornerResizeHeight: 2;
+  cornerResizePaddingRight: 2;
+  cornerResizePaddingBottom: 2;
+  
+  controlButtonWidth: 10;
+  controlButtonHeight: 10;
+  controlButtonGap: 4;
 }
 
 .mdiWindowFocus, .presentationWindowStyleFocus, .videoDockStyleFocus
 {
   headerHeight: 26;
   roundedBottomCorners: true;
-  backgroundColor: #b9babc;
+  backgroundColor: #93a0b1;
   backgroundAlpha: 1;
   
   borderStyle: solid;
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   borderAlpha: 1;
   borderThicknessLeft: 3;
   borderThicknessTop: 0;
@@ -601,11 +601,11 @@ MDIWindow { /*None of the following properties are overridden by the MDIWindow c
 {
   headerHeight: 26;
   roundedBottomCorners: true;
-  backgroundColor: #b9babc;
+  backgroundColor: #93a0b1;
   backgroundAlpha: 0.5;
-	
+  
   borderStyle: solid;
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   borderAlpha: 0.5;
   borderThicknessLeft: 3;
   borderThicknessTop: 0;
@@ -614,7 +614,7 @@ MDIWindow { /*None of the following properties are overridden by the MDIWindow c
 }
 
 .presentationSlideViewStyle {
-  backgroundColor: #b9babc;
+  backgroundColor: #93a0b1;
 }
 
 .presentationWindowControlsStyle {
@@ -635,7 +635,7 @@ MDIWindow { /*None of the following properties are overridden by the MDIWindow c
   backgroundAlpha: 0.5;
   
   borderStyle: solid;
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   borderAlpha: 0.5;
   borderThicknessLeft: 3;
   borderThicknessTop: 0;
@@ -649,9 +649,9 @@ MDIWindow { /*None of the following properties are overridden by the MDIWindow c
   roundedBottomCorners: true;
   backgroundColor: #e6e6e6;
   backgroundAlpha: 1;
-	
+  
   borderStyle: solid;
-  borderColor: #b9babc;
+  borderColor: #93a0b1;
   borderAlpha: 1;
   borderThicknessLeft: 3;
   borderThicknessTop: 0;
@@ -661,66 +661,66 @@ MDIWindow { /*None of the following properties are overridden by the MDIWindow c
 
 .videoPublishStyleNoFocus 
 {
-	headerHeight: 20;
-	roundedBottomCorners: true;
-	backgroundColor: #e6e6e6;
-	backgroundAlpha: 0.5;
-	
-	borderStyle: solid;
-	borderColor: #b9babc;
-	borderAlpha: 0.5;
-	borderThicknessLeft: 3;
-	borderThicknessTop: 0;
-	borderThicknessBottom: 3;
-	borderThicknessRight: 3;
+  headerHeight: 20;
+  roundedBottomCorners: true;
+  backgroundColor: #e6e6e6;
+  backgroundAlpha: 0.5;
+  
+  borderStyle: solid;
+  borderColor: #93a0b1;
+  borderAlpha: 0.5;
+  borderThicknessLeft: 3;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 3;
+  borderThicknessRight: 3;
 }
 
 .videoPublishStyleFocus 
 {
-	headerHeight: 20;
-	roundedBottomCorners: true;
-	backgroundColor: #e6e6e6;
-	backgroundAlpha: 1;
-	
-	borderStyle: solid;
-	borderColor: #b9babc;
-	borderAlpha: 1;
-	borderThicknessLeft: 3;
-	borderThicknessTop: 0;
-	borderThicknessBottom: 3;
-	borderThicknessRight: 3;
+  headerHeight: 20;
+  roundedBottomCorners: true;
+  backgroundColor: #e6e6e6;
+  backgroundAlpha: 1;
+  
+  borderStyle: solid;
+  borderColor: #93a0b1;
+  borderAlpha: 1;
+  borderThicknessLeft: 3;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 3;
+  borderThicknessRight: 3;
 }
 
 .videoAvatarStyleNoFocus 
 {
-	headerHeight: 20;
-	roundedBottomCorners: true;
-	backgroundColor: #e6e6e6;
-	backgroundAlpha: 0.5;
-	
-	borderStyle: solid;
-	borderColor: #b9babc;
-	borderAlpha: 0.5;
-	borderThicknessLeft: 3;
-	borderThicknessTop: 0;
-	borderThicknessBottom: 3;
-	borderThicknessRight: 3;
+  headerHeight: 20;
+  roundedBottomCorners: true;
+  backgroundColor: #e6e6e6;
+  backgroundAlpha: 0.5;
+  
+  borderStyle: solid;
+  borderColor: #93a0b1;
+  borderAlpha: 0.5;
+  borderThicknessLeft: 3;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 3;
+  borderThicknessRight: 3;
 }
 
 .videoAvatarStyleFocus 
 {
-	headerHeight: 20;
-	roundedBottomCorners: true;
-	backgroundColor: #e6e6e6;
-	backgroundAlpha: 1;
-	
-	borderStyle: solid;
-	borderColor: #b9babc;
-	borderAlpha: 1;
-	borderThicknessLeft: 3;
-	borderThicknessTop: 0;
-	borderThicknessBottom: 3;
-	borderThicknessRight: 3;
+  headerHeight: 20;
+  roundedBottomCorners: true;
+  backgroundColor: #e6e6e6;
+  backgroundAlpha: 1;
+  
+  borderStyle: solid;
+  borderColor: #93a0b1;
+  borderAlpha: 1;
+  borderThicknessLeft: 3;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 3;
+  borderThicknessRight: 3;
 }
 
 .mypanelTitle {
@@ -787,33 +787,33 @@ Alert {
 }
 
 .lockSettingsDefaultLabelStyle {
-	fontFamily: Arial;
-	fontSize: 14;  
-	fontWeight: bold;    
+  fontFamily: Arial;
+  fontSize: 14;  
+  fontWeight: bold;    
 }
 
 .lockSettingsWindowStyle {
-	borderColor: #b9babc;
-	borderAlpha: 1;
-	borderThicknessLeft: 10;
-	borderThicknessTop: 0;
-	borderThicknessBottom: 10;
-	borderThicknessRight: 10;
-	roundedBottomCorners: true;
-	cornerRadius: 5;
-	headerHeight: 20;
-	backgroundAlpha: 1;
-	headerColors: #b9babc, #b9babc;
-	footerColors: #b9babc, #b9babc;
-	backgroundColor: #EFEFEF;
-	dropShadowEnabled: true;
-	titleStyleName: "micSettingsWindowTitleStyle";
+  borderColor: #93a0b1;
+  borderAlpha: 1;
+  borderThicknessLeft: 10;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 10;
+  borderThicknessRight: 10;
+  roundedBottomCorners: true;
+  cornerRadius: 5;
+  headerHeight: 20;
+  backgroundAlpha: 1;
+  headerColors: #93a0b1, #93a0b1;
+  footerColors: #93a0b1, #93a0b1;
+  backgroundColor: #EFEFEF;
+  dropShadowEnabled: true;
+  titleStyleName: "micSettingsWindowTitleStyle";
 }
 
 .lockSettingsWindowTitleStyle {
-	fontFamily: Arial;
-	fontSize: 20;  
-	fontWeight: bold;
+  fontFamily: Arial;
+  fontSize: 20;  
+  fontWeight: bold;
 }
 
 .recordButtonStyleNormal {
@@ -827,3 +827,4 @@ Alert {
 .recordButtonStyleStop {
   icon:   Embed('assets/images/control-record-stop.png');
 }
+
