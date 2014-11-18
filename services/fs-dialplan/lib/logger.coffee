@@ -1,7 +1,8 @@
 bunyan = require 'bunyan'
+config = require '../config'
 
 logger = bunyan.createLogger({
-  name: 'bbbnode',
+  name: 'fsdialplan',
   streams: [
     {
       level: 'debug',
@@ -9,7 +10,7 @@ logger = bunyan.createLogger({
     },
     {
       level: 'info',
-      path: '/var/log/bigbluebutton/fs-dialplan.log'
+      path: config.log.path
     }
   ]
 });
