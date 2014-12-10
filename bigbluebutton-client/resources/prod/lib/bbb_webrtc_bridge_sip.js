@@ -348,7 +348,7 @@ function make_call(username, voiceBridge, server, callback, recall) {
 		if (currentSession) {
 			console.log('call ended ' + currentSession.endTime);
 			
-			if (callPurposefullyEnded === true) {
+			if (callPurposefullyEnded === true || voiceBridge === "9196") {
 				callback({'status':'ended'});
 			} else {
 				callback({'status':'failed', 'errorcode': 1005}); // Call ended unexpectedly
