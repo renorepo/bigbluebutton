@@ -94,4 +94,8 @@ public class Constants {
   public static final String CALLED_FROM_BBB                 = "called_from_bbb";
   public static final String VOICE_PIN                       = "voice_pin";
   public static final String FILENAME                        = "filename";
+  public static final String MODERATOR_PASS                  = "moderator_pass";
+  public static final String VIEWER_PASS                     = "viewer_pass";
+  public static final String CREATE_TIME                     = "create_time";
+  public static final String CREATE_DATE                     = "create_date";
 }

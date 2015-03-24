@@ -109,13 +109,13 @@ trait PresentationApp {
     def handleGotoSlide(msg: GotoSlide) {
 //      println("Received GotoSlide for meeting=[" +  msg.meetingID + "] page=[" + msg.page + "]")
 //      println("*** Before change page ****")
-      printPresentations
+//      printPresentations
       presModel.changePage(msg.page) foreach {page => 
 //        println("Switching page for meeting=[" +  msg.meetingID + "] page=[" + page.id + "]")
         outGW.send(new GotoSlideOutMsg(meetingID, recorded, page))
       }
 //      println("*** After change page ****")
-      printPresentations
+//      printPresentations
     }
     
     def handleSharePresentation(msg: SharePresentation) {

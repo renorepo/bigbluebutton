@@ -64,6 +64,10 @@ case class MeetingCreated(
     name: String,
     voiceBridge: String,
     duration: Long,
+    moderatorPass: String,
+    viewerPass: String,
+    createTime: Long,
+    createDate: String,
     version:String = Versions.V_0_0_1
 ) extends IOutMessage
 
@@ -122,7 +126,6 @@ case object IsAliveMessage extends IOutMessage
 // Permissions
 case class PermissionsSettingInitialized(
   meetingID: String, 
-  locked: Boolean, 
   permissions: Permissions,
   applyTo: Array[UserVO],
   version:String = Versions.V_0_0_1
@@ -143,24 +146,12 @@ case class UserLocked(
   version:String = Versions.V_0_0_1
 ) extends IOutMessage
                            
-case class UsersLocked(
-    meetingID: String, 
-    lock: Boolean, 
-    exceptUsers: Seq[String],
-  version:String = Versions.V_0_0_1
-) extends IOutMessage
-                           
 case class GetPermissionsSettingReply(
     meetingID: String, 
     userId: String,
   version:String = Versions.V_0_0_1
 ) extends IOutMessage
                            
-case class IsMeetingLockedReply(
-    meetingID: String, 
-    userId: String,
-  version:String = Versions.V_0_0_1
-) extends IOutMessage
 
 // Users
 case class UserRegistered(
@@ -205,7 +196,16 @@ case class GetUsersReply(
     users: Array[UserVO],
     version:String = Versions.V_0_0_1
 ) extends IOutMessage
-                         
+
+case class ValidateAuthTokenTimedOut(
+  meetingID: String, 
+  requesterId: String,
+  token: String,
+  valid: Boolean,
+  correlationId: String,
+  version:String = Versions.V_0_0_1
+  ) extends IOutMessage
+  
 case class ValidateAuthTokenReply(
   meetingID: String, 
   requesterId: String,
@@ -219,7 +219,7 @@ case class UserJoined(
     meetingID: String, 
     recorded: Boolean, 
     user:UserVO,
-  version:String = Versions.V_0_0_1
+    version:String = Versions.V_0_0_1
 ) extends IOutMessage
                       
 case class UserRaisedHand(
@@ -666,7 +666,11 @@ case class IsWhiteboardEnabledReply(
     replyTo: String,
     version:String = Versions.V_0_0_1
 ) extends IOutMessage
-                       
+
+case class GetAllMeetingsReply(
+    meetings: Array[MeetingInfo],
+    version:String = Versions.V_0_0_1
+) extends IOutMessage
 
 // Value Objects
 case class MeetingVO(

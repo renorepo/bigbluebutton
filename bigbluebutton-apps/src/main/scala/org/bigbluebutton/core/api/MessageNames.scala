@@ -9,6 +9,7 @@ object MessageNames {
   val LOCK_SETTING                         = "lock_setting_request"
   val LOCK_USER                            = "lock_user_request"
   val INIT_LOCK_SETTINGS                   = "init_lock_settings"
+  val INIT_AUDIO_SETTINGS                   = "init_audio_settings"
   val SET_LOCK_SETTINGS                    = "set_lock_settings"
   val GET_LOCK_SETTINGS                    = "get_lock_settings"
   val IS_MEETING_LOCKED                    = "is_meeting_locked"     
@@ -78,6 +79,7 @@ object MessageNames {
   val UNDO_WHITEBOARD                      = "undo_whiteboard_request"
   val ENABLE_WHITEBOARD                    = "enable_whiteboard_request"
   val IS_WHITEBOARD_ENABLED                = "is_whiteboard_enabled_request"
+  val GET_ALL_MEETINGS_REQUEST             = "get_all_meetings_request"
 
   // OUT MESSAGES
   val MEETING_CREATED                      = "meeting_created_message"
@@ -161,4 +163,5 @@ object MessageNames {
   val USER_LISTEN_ONLY                     = "user_listening_only"
   val START_RECORDING_VOICE_CONF           = "start_recording_voice_conference"
   val STOP_RECORDING_VOICE_CONF            = "stop_recording_voice_conference"
+  val GET_ALL_MEETINGS_REPLY               = "get_all_meetings_reply"
 }

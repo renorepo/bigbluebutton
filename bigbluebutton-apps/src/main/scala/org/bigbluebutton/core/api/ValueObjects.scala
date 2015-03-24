@@ -1,5 +1,7 @@
 package org.bigbluebutton.core.api
 
+import java.lang.Boolean
+
 object Role extends Enumeration {
 	type Role = Value
 	val MODERATOR = Value("MODERATOR")
@@ -36,7 +38,9 @@ case class Permissions(
   disableMic: Boolean = false,
   disablePrivChat: Boolean = false,
   disablePubChat: Boolean = false,
-  lockedLayout:Boolean = false
+  lockedLayout:Boolean = false,
+  lockOnJoin:Boolean = false,
+  lockOnJoinConfigurable:Boolean = false
 )
 
 case class RegisteredUser (
@@ -107,3 +111,5 @@ case class MeetingPasswords(moderatorPass: String, viewerPass: String)
     
 case class MeetingDuration(duration: Int = 0, createdTime: Long = 0, 
    startTime: Long = 0, endTime: Long = 0)
+
+case class MeetingInfo(meetingID: String, meetingName: String, recorded: Boolean, voiceBridge: String, duration: Long)

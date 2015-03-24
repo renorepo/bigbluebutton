@@ -5,6 +5,7 @@ import scala.actors.Actor._
 import scala.collection.mutable.HashMap
 import org.bigbluebutton.core.api._
 import org.bigbluebutton.core.util._
+import org.bigbluebutton.core.api.ValidateAuthTokenTimedOut
 
 class BigBlueButtonActor(outGW: MessageOutGateway) extends Actor with LogHelper {
 
@@ -17,13 +18,32 @@ class BigBlueButtonActor(outGW: MessageOutGateway) extends Actor with LogHelper 
 	      case msg: CreateMeeting                 => handleCreateMeeting(msg)
 	      case msg: DestroyMeeting                => handleDestroyMeeting(msg)
 	      case msg: KeepAliveMessage              => handleKeepAliveMessage(msg)
+	      case msg: ValidateAuthToken             => handleValidateAuthToken(msg)
+          case msg: GetAllMeetingsRequest         => handleGetAllMeetingsRequest(msg)
 	      case msg: InMessage                     => handleMeetingMessage(msg)
 	      case _ => // do nothing
 	    }
 	  }
   }
   
-
+  private def handleValidateAuthToken(msg: ValidateAuthToken) {
+    meetings.get(msg.meetingID) foreach { m =>
+      m !? (3000, msg) match {
+        case None => {
+          logger.warn("Failed to get response to from meeting=" + msg.meetingID + "]. Meeting has probably hung.")
+          outGW.send(new ValidateAuthTokenTimedOut(msg.meetingID, msg.userId, msg.token, false, msg.correlationId, msg.sessionId))
+        }
+        case Some(rep) => {
+        /**
+         * Received a reply from MeetingActor which means hasn't hung!
+         * Sometimes, the actor seems to hang and doesn't anymore accept messages. This is a simple
+         * audit to check whether the actor is still alive. (ralam feb 25, 2015)
+         */
+        }
+      }   
+    }      
+  }
+  
   private def handleMeetingMessage(msg: InMessage):Unit = {
     msg match {
       case ucm: UserConnectedToGlobalAudio => {
@@ -72,7 +92,7 @@ class BigBlueButtonActor(outGW: MessageOutGateway) extends Actor with LogHelper 
         outGW.send(new ValidateAuthTokenReply(vat.meetingID, vat.userId, vat.token, false, vat.correlationId))
       }
       case _ => {
-        println("No meeting [" + msg.meetingID + "] for message type [" + msg.getClass() + "]")
+        logger.info("No meeting [" + msg.meetingID + "] for message type [" + msg.getClass() + "]")
         // do nothing
       }
     }
@@ -89,6 +109,7 @@ class BigBlueButtonActor(outGW: MessageOutGateway) extends Actor with LogHelper 
       case Some(m) => {
         m ! StopMeetingActor
         meetings -= msg.meetingID    
+
         logger.info("Kicking everyone out of meeting id[" + msg.meetingID + "].")
         outGW.send(new EndAndKickAll(msg.meetingID, m.recorded))
         
@@ -101,14 +122,16 @@ class BigBlueButtonActor(outGW: MessageOutGateway) extends Actor with LogHelper 
   private def handleCreateMeeting(msg: CreateMeeting):Unit = {
     meetings.get(msg.meetingID) match {
       case None => {
-        println("New meeting create request [" + msg.meetingName + "]")
+        logger.info("New meeting create request [" + msg.meetingName + "]")
     	  var m = new MeetingActor(msg.meetingID, msg.externalMeetingID, msg.meetingName, msg.recorded, 
     	                  msg.voiceBridge, msg.duration, 
-    	                  msg.autoStartRecording, msg.allowStartStopRecording,
+    	                  msg.autoStartRecording, msg.allowStartStopRecording, msg.moderatorPass,
+    	                  msg.viewerPass, msg.createTime, msg.createDate,
     	                  outGW)
     	  m.start
     	  meetings += m.meetingID -> m
-    	  outGW.send(new MeetingCreated(m.meetingID, m.externalMeetingID, m.recorded, m.meetingName, m.voiceBridge, msg.duration))
+    	  outGW.send(new MeetingCreated(m.meetingID, m.externalMeetingID, m.recorded, m.meetingName, m.voiceBridge, msg.duration,
+    	                     msg.moderatorPass, msg.viewerPass, msg.createTime, msg.createDate))
     	  
     	  m ! new InitializeMeeting(m.meetingID, m.recorded)
     	  m ! "StartTimer"
@@ -119,5 +142,45 @@ class BigBlueButtonActor(outGW: MessageOutGateway) extends Actor with LogHelper 
       }
     }
   }
-  
+
+  private def handleGetAllMeetingsRequest(msg: GetAllMeetingsRequest) {
+    var len = meetings.keys.size
+    println("meetings.size=" + meetings.size)
+    println("len_=" + len)
+
+    val set = meetings.keySet
+    val arr : Array[String] = new Array[String](len)
+    set.copyToArray(arr)
+    val resultArray : Array[MeetingInfo] = new Array[MeetingInfo](len)
+
+    for(i <- 0 until arr.length) {
+      val id = arr(i)
+      val duration = meetings.get(arr(i)).head.getDuration()
+      val name = meetings.get(arr(i)).head.getMeetingName()
+      val recorded = meetings.get(arr(i)).head.getRecordedStatus()
+      val voiceBridge = meetings.get(arr(i)).head.getVoiceBridgeNumber()
+
+      var info = new MeetingInfo(id, name, recorded, voiceBridge, duration)
+      resultArray(i) = info
+
+      //remove later
+      println("for a meeting:" + id)
+      println("Meeting Name = " + meetings.get(id).head.getMeetingName())
+      println("isRecorded = " + meetings.get(id).head.getRecordedStatus())
+      println("voiceBridge = " + voiceBridge)
+      println("duration = " + duration)
+
+      //send the users
+      this ! (new GetUsers(id, "nodeJSapp"))
+
+      //send the presentation
+      this ! (new GetPresentationInfo(id, "nodeJSapp", "nodeJSapp"))
+
+      //send chat history
+      this ! (new GetChatHistoryRequest(id, "nodeJSapp", "nodeJSapp"))
+    }
+
+    outGW.send(new GetAllMeetingsReply(resultArray))
+  }
+
 }
