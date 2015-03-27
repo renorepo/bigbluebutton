@@ -540,7 +540,7 @@
      */
     function broadcast(bbbEvent) {
         if (!listeners[bbbEvent.eventName]) {
-            console.log("No listeners for [" + bbbEvent.eventName + "]");        
+            console.log("No listeners for [" + bbbEvent.eventName + "] data=" + JSON.stringify(bbbEvent));        
             return;
         }
         

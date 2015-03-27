@@ -314,7 +314,7 @@ trait UsersApp {
 	  val user = users.removeUser(userId)
 	  user foreach (u => outGW.send(new UserLeft(meetingID, recorded, u)))  
 	  
-    startCheckingIfWeNeedToEndVoiceConf()
+      startCheckingIfWeNeedToEndVoiceConf()
 	 }    
   }
   
@@ -362,9 +362,11 @@ trait UsersApp {
      logger.info("Web user joined voice conference. conf=[" + voiceBridge + "] vid=[" 
          + voiceUserId + "], wid=[" + user.userID + "] pin=[" + nu.pin + "] calledFromBbb=[" + nu.calledFromBbb + "]" )
      outGW.send(new UserJoinedVoice(meetingID, recorded, voiceBridge, nu))     
-     if (meetingMuted)
-        outGW.send(new MuteVoiceUser(meetingID, recorded, nu.userID, nu.userID, voiceBridge, nu.voiceUser.userId, meetingMuted))   
-    stopAutoStartedRecording()
+     if (meetingMuted) {
+        outGW.send(new MuteVoiceUser(meetingID, recorded, nu.userID, nu.userID, voiceBridge, nu.voiceUser.userId, meetingMuted))
+     }
+     
+     stopAutoStartedRecording()
   }
   
   def getInitialLockStatus(role: Role.Role):Boolean = {
@@ -385,38 +387,51 @@ trait UsersApp {
 		           phoneUser=true, calledFromBbb=calledFromBbb, 
 		           vu, listenOnly=false, authToken=webUserId, pin=pin, permissions)
 		  	
-		 users.addUser(uvo)
-		 logger.info("Phone caller joined voice conference. conf=[" + voiceBridge 
-		     + "] wid=[" + webUserId + "] vid=[" + voiceUserId + "] pin=[" + pin + "] calledFromBbb=[" + uvo.calledFromBbb + "]")
-		 outGW.send(new UserJoined(meetingID, recorded, uvo))
+     users.addUser(uvo)
+     logger.info("Phone caller joined voice conference. conf=[" + voiceBridge 
+         + "] wid=[" + webUserId + "] vid=[" + voiceUserId + "] pin=[" + pin + "] calledFromBbb=[" + uvo.calledFromBbb + "]")
+     outGW.send(new UserJoined(meetingID, recorded, uvo))
 		      
-		 outGW.send(new UserJoinedVoice(meetingID, recorded, voiceBridge, uvo))
-		 if (meetingMuted)
-        outGW.send(new MuteVoiceUser(meetingID, recorded, uvo.userID, uvo.userID, voiceBridge, uvo.voiceUser.userId, meetingMuted))    
+     outGW.send(new UserJoinedVoice(meetingID, recorded, voiceBridge, uvo))
+	
+     if (meetingMuted) {
+       outGW.send(new MuteVoiceUser(meetingID, recorded, uvo.userID, uvo.userID, voiceBridge, uvo.voiceUser.userId, meetingMuted))          
+     } 
   }
   
   def removePhoneCallerFromUsers(voiceUserId: String) {
-    users.getUserWithVoiceUserId(voiceUserId) foreach {user =>
-      val vu = new VoiceUser(user.userID, user.userID, user.name, user.name,  
+     users.getUserWithVoiceUserId(voiceUserId) foreach {user =>
+        val vu = new VoiceUser(user.userID, user.userID, user.name, user.name,  
                            false, false, false, false)
-      val nu = user.copy(voiceUser=vu)
-      users.addUser(nu)
+        val nu = user.copy(voiceUser=vu)
+        users.addUser(nu)
             
-      logger.info("Removing phone caller from users list. conf=[" + voiceBridge + "] vid=[" + voiceUserId + "] wid=[" + user.userID + "]" )
-      outGW.send(new UserLeftVoice(meetingID, recorded, voiceBridge, nu))    
+        logger.info("Removing phone caller from users list. conf=[" + 
+                     voiceBridge + "] vid=[" + voiceUserId + "] wid=[" + 
+                     user.userID + "]" )
+        outGW.send(new UserLeftVoice(meetingID, recorded, voiceBridge, nu))    
       
-      if (user.phoneUser) {
-	      processUserLeft(user.userID)       
-      }
-    }    
+        if (user.phoneUser) {
+	        processUserLeft(user.userID)       
+        }
+      }    
   }
 
   def ejectWebUserAsUserIsCallingInFromPhone(user: UserVO) {
-    logger.info("Ejecting web user uid[=" + user.userID + "] vid=[" + user.voiceUser.userId + "] conf=[" + voiceBridge + "]." 
-                         + "joined=[" + user.voiceUser.joined + "] phoneCalled=[" + user.phoneUser + "]")
+    logger.info("Ejecting web user uid[=" + user.userID + "] vid=[" + 
+                 user.voiceUser.userId + "] conf=[" + voiceBridge + "]." + 
+                 "joined=[" + user.voiceUser.joined + "] phoneCalled=[" + user.phoneUser + "]")
+                 
     if (user.voiceUser.joined && user.calledFromBbb) {
-      logger.info("Eject uid[=" + user.userID + "] vid=[" + user.voiceUser.userId + "] conf=[" + voiceBridge + "]. Calling in from phone." ) 
+      logger.info("Eject uid[=" + user.userID + "] vid=[" + user.voiceUser.userId + 
+          "] conf=[" + voiceBridge + "]. Calling in from phone." ) 
       outGW.send(new EjectVoiceUser(meetingID, recorded, user.userID, user.userID, voiceBridge, user.voiceUser.userId))
+      
+      // We send a user left voice event here because when we get the real notification
+      // from the voice conference that the user has left, we have already changed the
+      // voice userid with the phone caller so we end up not handling the messages.
+      // The clients will not know that the user has left the voice conference.
+      outGW.send(new UserLeftVoice(meetingID, recorded, voiceBridge, user)) 
     }       
   }
     
@@ -456,7 +471,7 @@ trait UsersApp {
               logger.info("Web user joined voice conference using phone. pin=[" 
                   + msg.authCode + "], vid=[" + msg.voiceUserId + "], " 
                   + "conf=[" + msg.voiceConf + "], wid=[" + userWithAuthCode.userID + "]")
-          		removePhoneCallerFromUsers(msg.voiceUserId)         
+              removePhoneCallerFromUsers(msg.voiceUserId)         
               webUserJoinedVoiceConference(userWithAuthCode, msg.voiceUserId, 
                   userWithAuthCode.userID, msg.callerIdName, msg.callerIdNum, 
                   calledFromBbb=false)
@@ -491,27 +506,33 @@ trait UsersApp {
   }
   
   
-	def handleVoiceUserLeftConfMessage(msg: VoiceUserLeftConfMessage) = {
-    users.getUserWithVoiceUserId(msg.voiceUserId) foreach {user =>
-      val vu = new VoiceUser(user.userID, user.userID, user.name, user.name,  
-                           false, false, false, false)
-      val nu = user.copy(voiceUser=vu)
-      users.addUser(nu)
-            
-      logger.info("Received voice user left. conf=[" + voiceBridge + "] vid=[" + msg.voiceUserId + "] uid=[" + user.userID + "]" )
-      outGW.send(new UserLeftVoice(meetingID, recorded, voiceBridge, nu))    
-      
-      if (user.phoneUser) {
-        logger.info("Phone caller leaving. conf=[" + voiceBridge + "] vid=[" + msg.voiceUserId + "] uid=[" + user.userID + "]" )
-	      if (users.hasUser(user.userID)) {
-	        logger.info("Removing phone caller from users. conf=[" + voiceBridge + "] vid=[" + msg.voiceUserId + "] uid=[" + user.userID + "]" )
-	        processUserLeft(user.userID)
-	      }        
+  def handleVoiceUserLeftConfMessage(msg: VoiceUserLeftConfMessage) = {
+    logger.debug("Received voice user left. conf=[" + voiceBridge + "] vid=[" + msg.voiceUserId + "]")
+    users.getUserWithVoiceUserId(msg.voiceUserId) match {
+      case Some(user) => {
+        val vu = new VoiceUser(user.userID, user.userID, user.name, user.name,  
+                             false, false, false, false)
+        val nu = user.copy(voiceUser=vu)
+        users.addUser(nu)
+              
+        logger.info("Received voice user left. conf=[" + voiceBridge + "] vid=[" + msg.voiceUserId + "] uid=[" + user.userID + "]" )
+        outGW.send(new UserLeftVoice(meetingID, recorded, voiceBridge, nu))    
+        
+        if (user.phoneUser) {
+          logger.info("Phone caller leaving. conf=[" + voiceBridge + "] vid=[" + msg.voiceUserId + "] uid=[" + user.userID + "]" )
+  	    if (users.hasUser(user.userID)) {
+  	      logger.info("Removing phone caller from users. conf=[" + voiceBridge + "] vid=[" + msg.voiceUserId + "] uid=[" + user.userID + "]" )
+  	      processUserLeft(user.userID)
+  	    }        
+        }
+        
+        stopRecordingVoiceConference()
       }
-      
-      stopRecordingVoiceConference()
+      case None => {
+        logger.debug("Received voice user left. User not found from conf=[" + voiceBridge + "] vid=[" + msg.voiceUserId + "]")
+      }
     }   
-	}
+  }
 	    
   def handleUserJoinedVoiceFromPhone(msg: VoiceUserJoined) = {
     val user = users.getUserWithVoiceUserId(msg.voiceUser.userId) match {
@@ -535,14 +556,14 @@ trait UsersApp {
 		                  phoneUser=true, calledFromBbb=false,
 		                  vu, listenOnly=false, authToken=webUserId, pin=webUserId, permissions)
 		  	
-		      users.addUser(uvo)
-		      logger.info("New user joined voice for user [" + uvo.name + "] userid=[" + msg.voiceUser.webUserId + "]")
-		      outGW.send(new UserJoined(meetingID, recorded, uvo, sessionId))
+		  users.addUser(uvo)
+		  logger.info("New user joined voice for user [" + uvo.name + "] userid=[" + msg.voiceUser.webUserId + "]")
+		  outGW.send(new UserJoined(meetingID, recorded, uvo, sessionId))
 		      
-		      outGW.send(new UserJoinedVoice(meetingID, recorded, voiceBridge, uvo))
-		      if (meetingMuted)
+		  outGW.send(new UserJoinedVoice(meetingID, recorded, voiceBridge, uvo))
+		  if (meetingMuted) {
             outGW.send(new MuteVoiceUser(meetingID, recorded, uvo.userID, uvo.userID, voiceBridge, uvo.voiceUser.userId, meetingMuted))
-        
+		  }
         }
     }
   }

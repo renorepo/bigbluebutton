@@ -106,13 +106,22 @@ function stopWebRTCAudioTestJoinConference(){
 	}, 5000);
 	
 	BBB.listen("UserJoinedVoiceEvent", userJoinedVoiceHandler);
+	BBB.listen("UserLeftVoiceEvent", userLeftVoiceHandler);
 	
 	currentSession.dtmf(1);
 	inEchoTest = false;
 }
 
+function userLeftVoiceHandler(event) {
+  console.log("userLeftVoiceHandler - userId=[" + userID + "] event=[" + JSON.stringify(event) + "]"); 
+  if (callActive === true && userID === event.userID) {
+    BBB.unlisten("UserLeftVoiceEvent", userLeftVoiceHandler);
+    webrtc_hangup();
+  }
+}
+
 function userJoinedVoiceHandler(event) {
-	console.log("UserJoinedVoiceHandler - " + event);
+	console.log("UserJoinedVoiceHandler - userId=[" + userID + "] event=[" + JSON.stringify(event) + "]"); 
 	if (inEchoTest === false && userID === event.userID) {
 		BBB.unlisten("UserJoinedVoiceEvent", userJoinedVoiceHandler);
 		clearTimeout(transferTimeout);
