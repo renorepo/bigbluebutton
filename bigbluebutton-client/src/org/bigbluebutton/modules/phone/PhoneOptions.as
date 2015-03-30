@@ -22,6 +22,9 @@ package org.bigbluebutton.modules.phone
 	
 	public class PhoneOptions {
     public var uri:String = "unknown";
+
+    [Bindable]
+    public var enableDialOutOption:Boolean = false;
     
 		[Bindable]
 		public var showButton:Boolean = true;
@@ -60,9 +63,12 @@ package org.bigbluebutton.modules.phone
         if (vxml.@uri != undefined) {
           uri = vxml.@uri.toString();
         }
-				if (vxml.@showButton != undefined) {
-					showButton = (vxml.@showButton.toString().toUpperCase() == "TRUE") ? true : false;
+				if (vxml.@enableDialOutOption != undefined) {
+          enableDialOutOption = (vxml.@enableDialOutOption.toString().toUpperCase() == "TRUE") ? true : false;
 				}
+        if (vxml.@showButton != undefined) {
+          showButton = (vxml.@showButton.toString().toUpperCase() == "TRUE") ? true : false;
+        }
 				if (vxml.@autoJoin != undefined) {
 					autoJoin = (vxml.@autoJoin.toString().toUpperCase() == "TRUE") ? true : false;
 				}

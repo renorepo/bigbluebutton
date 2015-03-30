@@ -20,20 +20,25 @@
 
 package org.bigbluebutton.modules.phone.maps
 {
-	import com.asfusion.mate.events.Dispatcher;	
+	import com.asfusion.mate.events.Dispatcher;
 	import org.bigbluebutton.common.events.ToolbarButtonEvent;
 	import org.bigbluebutton.core.BBB;
 	import org.bigbluebutton.modules.phone.PhoneOptions;
+	import org.bigbluebutton.modules.phone.views.components.DialOutButton;
 	import org.bigbluebutton.modules.phone.views.components.ToolbarButton;
 	
 	public class PhoneEventMapDelegate {
+    private static const LOG:String = "Phone::PhoneEventMapDelegate - ";
+    
 		private var phoneOptions:PhoneOptions;
 		private var phoneButton:ToolbarButton;
+    private var dialOutButton:DialOutButton;
 		private var buttonOpen:Boolean = false;
 		private var globalDispatcher:Dispatcher;
 				
 		public function PhoneEventMapDelegate() {
 			phoneButton = new ToolbarButton();
+      dialOutButton = new DialOutButton();
 			globalDispatcher = new Dispatcher();
 			phoneOptions = new PhoneOptions();
 		}
@@ -49,6 +54,13 @@ package org.bigbluebutton.modules.phone.maps
 				  globalDispatcher.dispatchEvent(event);		   	
 			   	buttonOpen = true;		   		
 		   	}
+        
+        if (phoneOptions.enableDialOutOption) {
+          trace(LOG + "display dial out button.");
+          var dialOutEvent:ToolbarButtonEvent = new ToolbarButtonEvent(ToolbarButtonEvent.ADD);
+          dialOutEvent.button = dialOutButton;
+          globalDispatcher.dispatchEvent(dialOutEvent);
+        }
 		}
 		
 		public function removeToolbarButton():void {

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+BigBlueButton open source conferencing system - http://www.bigbluebutton.org/
+
+Copyright (c) 2012 BigBlueButton Inc. and by respective authors (see below).
+
+This program is free software; you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free Software
+Foundation; either version 3.0 of the License, or (at your option) any later
+version.
+
+BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along
+with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:mate="http://mate.asfusion.com/"
+           styleName="dialOutDefaultButtonStyle" click="startDialOut()"
+	mouseOver = "mouseOverHandler(event)"
+	mouseOut = "mouseOutHandler(event)"
+	creationComplete="onCreationComplete()"
+	height="24"
+	toolTip="{ResourceUtil.getInstance().getString('bbb.toolbar.phone.toolTip.dialout')}"
+	implements="org.bigbluebutton.common.IBbbToolbarComponent">
+ 
+	<mx:Script>
+		<![CDATA[
+			import com.asfusion.mate.events.Dispatcher;
+			
+			import org.bigbluebutton.core.UsersUtil;
+			import org.bigbluebutton.core.managers.UserManager;
+			import org.bigbluebutton.main.events.BBBEvent;
+			import org.bigbluebutton.main.events.ShortcutEvent;
+			import org.bigbluebutton.main.model.users.BBBUser;
+			import org.bigbluebutton.main.model.users.Conference;
+			import org.bigbluebutton.main.views.MainToolbar;
+			import org.bigbluebutton.modules.phone.PhoneOptions;
+			import org.bigbluebutton.modules.phone.events.AudioSelectionWindowEvent;
+			import org.bigbluebutton.modules.phone.events.FlashJoinedListenOnlyVoiceConferenceEvent;
+			import org.bigbluebutton.modules.phone.events.FlashJoinedVoiceConferenceEvent;
+			import org.bigbluebutton.modules.phone.events.FlashLeftVoiceConferenceEvent;
+			import org.bigbluebutton.modules.phone.events.JoinVoiceConferenceCommand;
+			import org.bigbluebutton.modules.phone.events.LeaveVoiceConferenceCommand;
+			import org.bigbluebutton.modules.phone.events.WebRTCCallEvent;
+			import org.bigbluebutton.util.i18n.ResourceUtil;
+			
+      private static const LOG:String = "Phone::DialOutButton - ";
+      
+			private var dispatcher:Dispatcher = new Dispatcher();
+			private var mic:Microphone;
+			
+			public const DEFAULT_STATE:Number = 0;
+			public const ACTIVE_STATE:Number = 1;
+			private var _currentState:Number = DEFAULT_STATE;
+			
+			[Bindable] public var phoneOptions:PhoneOptions = new PhoneOptions();
+			
+			private function startDialOut():void {
+				var conference:Conference = UserManager.getInstance().getConference();
+				var thisUser:BBBUser = conference.getMyUser();
+				
+				trace(LOG + "startPhone 1 enabled=[" + enabled + "] selected=[" + selected + "]");
+				// Disable the button right away to prevent the user from clicking
+				// multiple times.
+				this.enabled = false;
+				trace(LOG + "startPhone 2 enabled=[" + enabled + "] selected=[" + selected + "]");
+				if (this.selected) {
+
+				} else {
+					trace(LOG + "Sending Leave Conference command");
+				}				
+			}
+			
+			private function mouseOverHandler(event:MouseEvent):void {
+				if(_currentState == ACTIVE_STATE)
+          this.styleName = "dialOutInactiveButtonStyle";
+				else
+          this.styleName = "dialOutActiveButtonStyle"; 			
+			}
+
+			private function mouseOutHandler(event:MouseEvent):void {
+				if(_currentState == ACTIVE_STATE)
+          this.styleName = "dialOutActiveButtonStyle";
+				else
+          this.styleName = "dialOutDefaultButtonStyle";			
+			}
+			
+			private function onCreationComplete():void {
+				var conference:Conference = UserManager.getInstance().getConference();
+				var thisUser:BBBUser = conference.getMyUser();
+				
+			}
+
+		
+			private function handleClosedAudioSelectionWindowEvent(event:AudioSelectionWindowEvent):void {
+				this.selected = false;
+				this.enabled = true;
+        trace(LOG + "onClosedAudioSelection enabled=[" + enabled + "] selected=[" + selected + "]");
+				_currentState = DEFAULT_STATE;
+        this.styleName = "voiceConfDefaultButtonStyle";
+				this.toolTip = ResourceUtil.getInstance().getString('bbb.toolbar.phone.toolTip.start');
+			}
+				
+			//For whatever reason the tooltip does not update when localization is changed dynamically. Overrideing it here
+			override protected function resourcesChanged():void {
+				this.toolTip = ResourceUtil.getInstance().getString('bbb.toolbar.phone.toolTip.start');
+			}
+			
+			public function getAlignment():String{
+				return MainToolbar.ALIGN_LEFT;
+			}
+			
+			public function theory():String{
+				return "Dial out button";
+			}
+			
+			private function joinVoiceFocusHead(e:BBBEvent):void{
+				this.setFocus();
+			}
+		]]>
+	</mx:Script>
+</mx:Button>

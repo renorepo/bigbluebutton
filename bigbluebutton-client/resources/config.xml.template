@@ -59,6 +59,7 @@
 			enabledEchoCancel="true"
 			useWebRTCIfAvailable="true"
 			showPhoneOption="false"
+			enableDialOutOption="true"
 			echoTestApp="9196"
 			dependsOn="UsersModule"
 		/>

@@ -216,6 +216,18 @@ DataGrid {
   icon: Embed('assets/images/headset.png');    
 }
 
+.dialOutDefaultButtonStyle {
+  icon: Embed('assets/images/dialout.png');    
+}
+
+.dialOutActiveButtonStyle {
+  icon: Embed('assets/images/dialout.png');    
+}
+
+.dialOutInactiveButtonStyle {
+  icon: Embed('assets/images/dialout.png');    
+}
+
 .voiceConfActiveButtonStyle {
   icon: Embed('assets/images/headset_open.png');    
 }
