@@ -50,7 +50,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 	<mate:Listener type="{WebRTCAskUserToChangeMicEvent.WEBRTC_ASK_USER_TO_CHANGE_MIC}" method="handleWebRTCAskUserToChangeMicEvent"  />
 	<mate:Listener type="{AudioSelectionWindowEvent.SHOW_AUDIO_SELECTION}" method="handleShowAudioSelectionWindowEvent" />
 	<mate:Listener type="{ShareCameraRequestEvent.SHARE_CAMERA_REQUEST}" method="handleShareCameraRequestEvent" />
-  
+  <mate:Listener type="{DialOutWindowEvent.SHOW_DIAL_OUT_WINDOW}" method="handleShowDialOutWindowEvent" />
 	<mate:Listener type="{ToolbarButtonEvent.ADD}" method="handleAddToolbarComponent" />	
 	<mate:Listener type="{ToolbarButtonEvent.REMOVE}" method="handleRemoveToolbarComponent"/>
 	<mate:Listener type="{ShortcutEvent.OPEN_SHORTCUT_WIN}" method="openShortcutHelpWindow" />
@@ -60,59 +60,60 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 	  
 	<mx:Script>
 		<![CDATA[
-			import com.asfusion.mate.events.Dispatcher;
-			
-			import flash.events.MouseEvent;
-			import flash.geom.Point;
-			
-			import flexlib.mdi.containers.MDIWindow;
-			import flexlib.mdi.effects.effectsLib.MDIVistaEffects;
-			
-			import mx.collections.ArrayCollection;
-			import mx.containers.TitleWindow;
-			import mx.controls.Alert;
-			import mx.core.FlexGlobals;
-			import mx.core.IFlexDisplayObject;
-			import mx.core.UIComponent;
-			import mx.events.CloseEvent;
-			import mx.events.FlexEvent;
-			import mx.managers.PopUpManager;
-			
-			import org.bigbluebutton.common.IBbbModuleWindow;
-			import org.bigbluebutton.common.Images;
-			import org.bigbluebutton.common.LogUtil;
-			import org.bigbluebutton.common.events.AddUIComponentToMainCanvas;
-			import org.bigbluebutton.common.events.CloseWindowEvent;
-			import org.bigbluebutton.common.events.OpenWindowEvent;
-			import org.bigbluebutton.common.events.ToolbarButtonEvent;
-			import org.bigbluebutton.core.BBB;
-			import org.bigbluebutton.core.events.LockControlEvent;
-			import org.bigbluebutton.core.managers.UserManager;
-			import org.bigbluebutton.core.vo.LockSettingsVO;
-			import org.bigbluebutton.main.events.AppVersionEvent;
-			import org.bigbluebutton.main.events.BBBEvent;
-			import org.bigbluebutton.main.events.ClientStatusEvent;
-			import org.bigbluebutton.main.events.ConfigEvent;
-			import org.bigbluebutton.main.events.InvalidAuthTokenEvent;
-			import org.bigbluebutton.main.events.LogoutEvent;
-			import org.bigbluebutton.main.events.MeetingNotFoundEvent;
-			import org.bigbluebutton.main.events.ModuleLoadEvent;
-			import org.bigbluebutton.main.events.PortTestEvent;
-			import org.bigbluebutton.main.events.ShortcutEvent;
-			import org.bigbluebutton.main.events.SuccessfulLoginEvent;
-			import org.bigbluebutton.main.model.LayoutOptions;
-			import org.bigbluebutton.main.model.users.Conference;
-			import org.bigbluebutton.main.model.users.events.ConnectionFailedEvent;
-			import org.bigbluebutton.modules.phone.events.AudioSelectionWindowEvent;
-			import org.bigbluebutton.modules.phone.events.FlashMicSettingsEvent;
-			import org.bigbluebutton.modules.phone.events.PerformEchoTestEvent;
-			import org.bigbluebutton.modules.phone.events.WebRTCAskUserToChangeMicEvent;
-			import org.bigbluebutton.modules.phone.events.WebRTCCallEvent;
-			import org.bigbluebutton.modules.phone.events.WebRTCEchoTestEvent;
-			import org.bigbluebutton.modules.phone.events.WebRTCMediaEvent;
-			import org.bigbluebutton.modules.videoconf.events.ShareCameraRequestEvent;
-			import org.bigbluebutton.util.i18n.ResourceUtil;
-			import org.bigbluebutton.util.logging.Logger;
+      import com.asfusion.mate.events.Dispatcher;
+      
+      import flash.events.MouseEvent;
+      import flash.geom.Point;
+      
+      import flexlib.mdi.containers.MDIWindow;
+      import flexlib.mdi.effects.effectsLib.MDIVistaEffects;
+      
+      import mx.collections.ArrayCollection;
+      import mx.containers.TitleWindow;
+      import mx.controls.Alert;
+      import mx.core.FlexGlobals;
+      import mx.core.IFlexDisplayObject;
+      import mx.core.UIComponent;
+      import mx.events.CloseEvent;
+      import mx.events.FlexEvent;
+      import mx.managers.PopUpManager;
+      
+      import org.bigbluebutton.common.IBbbModuleWindow;
+      import org.bigbluebutton.common.Images;
+      import org.bigbluebutton.common.LogUtil;
+      import org.bigbluebutton.common.events.AddUIComponentToMainCanvas;
+      import org.bigbluebutton.common.events.CloseWindowEvent;
+      import org.bigbluebutton.common.events.OpenWindowEvent;
+      import org.bigbluebutton.common.events.ToolbarButtonEvent;
+      import org.bigbluebutton.core.BBB;
+      import org.bigbluebutton.core.events.LockControlEvent;
+      import org.bigbluebutton.core.managers.UserManager;
+      import org.bigbluebutton.core.vo.LockSettingsVO;
+      import org.bigbluebutton.main.events.AppVersionEvent;
+      import org.bigbluebutton.main.events.BBBEvent;
+      import org.bigbluebutton.main.events.ClientStatusEvent;
+      import org.bigbluebutton.main.events.ConfigEvent;
+      import org.bigbluebutton.main.events.InvalidAuthTokenEvent;
+      import org.bigbluebutton.main.events.LogoutEvent;
+      import org.bigbluebutton.main.events.MeetingNotFoundEvent;
+      import org.bigbluebutton.main.events.ModuleLoadEvent;
+      import org.bigbluebutton.main.events.PortTestEvent;
+      import org.bigbluebutton.main.events.ShortcutEvent;
+      import org.bigbluebutton.main.events.SuccessfulLoginEvent;
+      import org.bigbluebutton.main.model.LayoutOptions;
+      import org.bigbluebutton.main.model.users.Conference;
+      import org.bigbluebutton.main.model.users.events.ConnectionFailedEvent;
+      import org.bigbluebutton.modules.phone.events.AudioSelectionWindowEvent;
+      import org.bigbluebutton.modules.phone.events.DialOutWindowEvent;
+      import org.bigbluebutton.modules.phone.events.FlashMicSettingsEvent;
+      import org.bigbluebutton.modules.phone.events.PerformEchoTestEvent;
+      import org.bigbluebutton.modules.phone.events.WebRTCAskUserToChangeMicEvent;
+      import org.bigbluebutton.modules.phone.events.WebRTCCallEvent;
+      import org.bigbluebutton.modules.phone.events.WebRTCEchoTestEvent;
+      import org.bigbluebutton.modules.phone.events.WebRTCMediaEvent;
+      import org.bigbluebutton.modules.videoconf.events.ShareCameraRequestEvent;
+      import org.bigbluebutton.util.i18n.ResourceUtil;
+      import org.bigbluebutton.util.logging.Logger;
 	
       private static const LOG:String = "Main::MainApplicationShell - ";
       
@@ -427,9 +428,14 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 
       private function handleShowAudioSelectionWindowEvent(event:AudioSelectionWindowEvent):void {
   	    var audioSelection:IFlexDisplayObject = PopUpManager.createPopUp(mdiCanvas, AudioSelectionWindow, true);
-		PopUpManager.centerPopUp(audioSelection);
+		    PopUpManager.centerPopUp(audioSelection);
 	  }
-          
+
+      private function handleShowDialOutWindowEvent(event:DialOutWindowEvent):void {
+        var dialOutWindow:IFlexDisplayObject = PopUpManager.createPopUp(mdiCanvas, DialOutWindow, true);
+        PopUpManager.centerPopUp(dialOutWindow);
+      }
+        
       private function handleWebRTCAskUserToChangeMicEvent(event:WebRTCAskUserToChangeMicEvent):void {
         var browser:String = event.browser;
         if (browser == "Firefox") {

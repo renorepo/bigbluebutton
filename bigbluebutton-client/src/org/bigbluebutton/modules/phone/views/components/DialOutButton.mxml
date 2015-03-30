@@ -31,24 +31,25 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  
 	<mx:Script>
 		<![CDATA[
-			import com.asfusion.mate.events.Dispatcher;
-			
-			import org.bigbluebutton.core.UsersUtil;
-			import org.bigbluebutton.core.managers.UserManager;
-			import org.bigbluebutton.main.events.BBBEvent;
-			import org.bigbluebutton.main.events.ShortcutEvent;
-			import org.bigbluebutton.main.model.users.BBBUser;
-			import org.bigbluebutton.main.model.users.Conference;
-			import org.bigbluebutton.main.views.MainToolbar;
-			import org.bigbluebutton.modules.phone.PhoneOptions;
-			import org.bigbluebutton.modules.phone.events.AudioSelectionWindowEvent;
-			import org.bigbluebutton.modules.phone.events.FlashJoinedListenOnlyVoiceConferenceEvent;
-			import org.bigbluebutton.modules.phone.events.FlashJoinedVoiceConferenceEvent;
-			import org.bigbluebutton.modules.phone.events.FlashLeftVoiceConferenceEvent;
-			import org.bigbluebutton.modules.phone.events.JoinVoiceConferenceCommand;
-			import org.bigbluebutton.modules.phone.events.LeaveVoiceConferenceCommand;
-			import org.bigbluebutton.modules.phone.events.WebRTCCallEvent;
-			import org.bigbluebutton.util.i18n.ResourceUtil;
+      import com.asfusion.mate.events.Dispatcher;
+      
+      import org.bigbluebutton.core.UsersUtil;
+      import org.bigbluebutton.core.managers.UserManager;
+      import org.bigbluebutton.main.events.BBBEvent;
+      import org.bigbluebutton.main.events.ShortcutEvent;
+      import org.bigbluebutton.main.model.users.BBBUser;
+      import org.bigbluebutton.main.model.users.Conference;
+      import org.bigbluebutton.main.views.MainToolbar;
+      import org.bigbluebutton.modules.phone.PhoneOptions;
+      import org.bigbluebutton.modules.phone.events.AudioSelectionWindowEvent;
+      import org.bigbluebutton.modules.phone.events.DialOutWindowEvent;
+      import org.bigbluebutton.modules.phone.events.FlashJoinedListenOnlyVoiceConferenceEvent;
+      import org.bigbluebutton.modules.phone.events.FlashJoinedVoiceConferenceEvent;
+      import org.bigbluebutton.modules.phone.events.FlashLeftVoiceConferenceEvent;
+      import org.bigbluebutton.modules.phone.events.JoinVoiceConferenceCommand;
+      import org.bigbluebutton.modules.phone.events.LeaveVoiceConferenceCommand;
+      import org.bigbluebutton.modules.phone.events.WebRTCCallEvent;
+      import org.bigbluebutton.util.i18n.ResourceUtil;
 			
       private static const LOG:String = "Phone::DialOutButton - ";
       
@@ -65,15 +66,16 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 				var conference:Conference = UserManager.getInstance().getConference();
 				var thisUser:BBBUser = conference.getMyUser();
 				
-				trace(LOG + "startPhone 1 enabled=[" + enabled + "] selected=[" + selected + "]");
+				trace(LOG + "startDialOut 1 enabled=[" + enabled + "] selected=[" + selected + "]");
 				// Disable the button right away to prevent the user from clicking
 				// multiple times.
 				this.enabled = false;
-				trace(LOG + "startPhone 2 enabled=[" + enabled + "] selected=[" + selected + "]");
+				trace(LOG + "startDialOut 2 enabled=[" + enabled + "] selected=[" + selected + "]");
 				if (this.selected) {
 
 				} else {
-					trace(LOG + "Sending Leave Conference command");
+					trace(LOG + "Open dial out window.");
+          dispatcher.dispatchEvent(new DialOutWindowEvent(DialOutWindowEvent.SHOW_DIAL_OUT_WINDOW));
 				}				
 			}
 			
