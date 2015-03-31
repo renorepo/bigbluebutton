@@ -164,4 +164,5 @@ object MessageNames {
   val START_RECORDING_VOICE_CONF           = "start_recording_voice_conference"
   val STOP_RECORDING_VOICE_CONF            = "stop_recording_voice_conference"
   val GET_ALL_MEETINGS_REPLY               = "get_all_meetings_reply"
+  val INVITE_USER_INTO_VOICE_CONF          = "invite_user_into_voice_conference"
 }

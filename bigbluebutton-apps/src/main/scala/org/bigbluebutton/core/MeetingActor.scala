@@ -143,7 +143,7 @@ class MeetingActor(val meetingID: String, val externalMeetingID: String, val mee
 	    case msg: SetRecordingStatus                     => handleSetRecordingStatus(msg)
 	    case msg: GetRecordingStatus                     => handleGetRecordingStatus(msg)
 	    case msg: VoiceRecording                         => handleVoiceRecording(msg)
-	    
+	    case msg: InviteUserIntoVoiceConfRequest         => handleInviteUserIntoVoiceConfRequest(msg)
 	    case msg: EndMeeting                             => handleEndMeeting(msg)
 	    case StopMeetingActor                            => exit
 	    case _ => // do nothing
@@ -225,6 +225,13 @@ class MeetingActor(val meetingID: String, val externalMeetingID: String, val mee
     outGW.send(new DisconnectUser(meetingID, userId))
   }
   
+  private def handleInviteUserIntoVoiceConfRequest(msg: InviteUserIntoVoiceConfRequest) {
+    val inviteMessage = new InviteUserIntoVoiceConference(meetingID, recorded,
+                          voiceBridge, msg.userNumber, msg.callerName,
+                          msg.dialNumber)
+    outGW.send(inviteMessage)
+  }
+    
   private def handleEndMeeting(msg: EndMeeting) {
     meetingEnded = true
     outGW.send(new MeetingEnded(msg.meetingID, recorded, voiceBridge))

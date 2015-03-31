@@ -20,10 +20,16 @@ class VoiceConfEventRedisPublisher(service: MessageSender) extends OutMessageLis
 	    case msg: EjectAllVoiceUsers            => handleEjectAllVoiceUsers(msg)
 	    case msg: StopRecordingVoiceConference  => handleStopRecordingVoiceConference(msg)
 	    case msg: StartRecordingVoiceConference => handleStartRecordingVoiceConference(msg)
+	    case msg: InviteUserIntoVoiceConference => handleInviteUserIntoVoiceConference(msg)
 	    case _ => // do nothing
 	  }
 	}
-  
+
+  private def handleInviteUserIntoVoiceConference(msg: InviteUserIntoVoiceConference) {
+    val json = VoiceConfMessageToJsonConverter.inviteUserIntoVoiceConferenceToJson(msg)
+    service.send(MessagingConstants.TO_VOICE_CHANNEL, json)    
+  }
+    
   private def handleStopRecordingVoiceConference(msg: StopRecordingVoiceConference) {
     val json = VoiceConfMessageToJsonConverter.stopRecordingVoiceConferenceToJson(msg)
     service.send(MessagingConstants.TO_VOICE_CHANNEL, json)    

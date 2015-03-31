@@ -98,10 +98,18 @@ public class VoiceService {
 		String userId = (String) msg.get("userId");
 		String meetingID = Red5.getConnectionLocal().getScope().getName();
 		String ejectedBy = getBbbSession().getInternalUserID();		
-		bbbInGW.ejectUserFromVoice(meetingID, userId, ejectedBy); 	
-		
+		bbbInGW.ejectUserFromVoice(meetingID, userId, ejectedBy); 			
 	}
-		
+	
+	public void inviteUserIntoVoiceConf(Map<String, Object> msg) {
+	    String meetingID = Red5.getConnectionLocal().getScope().getName();
+	    String requesterId = getBbbSession().getInternalUserID();
+        String userNumber = (String) msg.get("userNumber");
+        String callerName = (String) msg.get("callerName");
+        String dialNumber = (String) msg.get("dialNumber");
+	    bbbInGW.inviteUserIntoVoiceConference(meetingID, userNumber, callerName, dialNumber, requesterId);           
+	}
+	   
 	private BigBlueButtonSession getBbbSession() {
 		return (BigBlueButtonSession) Red5.getConnectionLocal().getAttribute(Constants.SESSION);
 	}

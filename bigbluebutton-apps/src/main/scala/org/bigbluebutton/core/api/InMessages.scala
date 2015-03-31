@@ -463,7 +463,14 @@ case class VoiceUserJoinedMessage(
     muted: Boolean, 
     talking: Boolean) extends InMessage
     
-
+case class InviteUserIntoVoiceConfRequest (
+    meetingID: String,
+    userNumber: String,
+    callerName: String,
+    dialNumber: String,
+    requesterId: String
+) extends InMessage
+    
 case class VoiceUserJoined(
     meetingID: String, 
     voiceUser: VoiceUser

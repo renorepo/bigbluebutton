@@ -478,4 +478,10 @@ class BigBlueButtonInGW(bbbGW: BigBlueButtonGateway, presUtil: PreuploadedPresen
 	  voiceGW.voiceRecording(meetingId, recordingFile, 
 			            timestamp, recording)
 	}
+	
+	def inviteUserIntoVoiceConference(meetingId: String, userNumber: String, 
+         callerName: String, dialNumber: String, requesterId: String) {
+	  voiceGW.inviteUserIntoVoiceConference(meetingId, userNumber, 
+         callerName, dialNumber, requesterId)
+	}
 }

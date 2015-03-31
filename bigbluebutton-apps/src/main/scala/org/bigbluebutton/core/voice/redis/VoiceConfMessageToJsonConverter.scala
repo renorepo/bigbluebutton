@@ -85,4 +85,16 @@ object VoiceConfMessageToJsonConverter {
     val header = Util.buildHeader(MessageNames.EJECT_ALL_VOICE_USERS, msg.version, None)
     Util.buildJson(header, payload)
   }  
+  
+  def inviteUserIntoVoiceConferenceToJson(msg: InviteUserIntoVoiceConference):String = {
+    val payload = new java.util.HashMap[String, Any]()
+    payload.put(Constants.MEETING_ID, msg.meetingID)
+    payload.put(Constants.VOICE_CONF, msg.voiceConf)
+    payload.put(Constants.USER_NUMBER, msg.userNumber)
+    payload.put(Constants.CALLER_NAME, msg.callerName)
+    payload.put(Constants.DIAL_NUMBER, msg.dialInNumber)
+
+    val header = Util.buildHeader(MessageNames.INVITE_USER_INTO_VOICE_CONF, msg.version, None)
+    Util.buildJson(header, payload)
+  }
 }

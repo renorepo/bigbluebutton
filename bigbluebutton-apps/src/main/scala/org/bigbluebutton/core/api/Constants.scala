@@ -95,4 +95,8 @@ object Constants {
   val VIEWER_PASS                     = "viewer_pass"
   val CREATE_TIME                     = "create_time"
   val CREATE_DATE                     = "create_date"
+  val USER_NUMBER                     = "user_number"
+  val DIAL_NUMBER                     = "dial_number"
+  val CALLER_NAME                     = "caller_name"
+  
 }

@@ -8,6 +8,16 @@ import org.bigbluebutton.core.apps.presentation.Page
 
 abstract class OutMessage
 
+case class InviteUserIntoVoiceConference(
+    meetingID: String, 
+    recorded: Boolean,
+    voiceConf: String,
+    userNumber: String,
+    callerName: String,
+    dialInNumber: String,
+    version:String = Versions.V_0_0_1
+) extends IOutMessage
+
 case class StartRecordingVoiceConference(
     meetingID: String, 
     recorded: Boolean,

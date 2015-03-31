@@ -66,7 +66,9 @@ public interface IBigBlueButtonInGW {
 			            String timestamp, Boolean recording);
 	void voiceConferenceRecordingStarted(String voiceConf, String filename, String timestamp);
 	void voiceConferenceRecordingStopped(String voiceConf, String timestamp);
-	
+	void inviteUserIntoVoiceConference(String meetingId, String userNumber, 
+	    String callerName, String dialNumber, String requesterId);
+	   
 	// Presentation
 	void clear(String meetingID);
 	void removePresentation(String meetingID, String presentationID);
