@@ -218,8 +218,7 @@ package org.bigbluebutton.modules.users.services
     
     public function muteUnmuteUser(userid:String, mute:Boolean):void {
       trace(LOG + "Sending muteUnmuteUser. id=[" + userid + "], mute=[" + mute + "]");
-      tempInvite();
-/*      
+      
       var message:Object = new Object();
       message["userId"] = userid;
       message["mute"] = mute;
@@ -235,13 +234,9 @@ package org.bigbluebutton.modules.users.services
         },
         message
       );          
-*/
+
     } 
-    
-    private function tempInvite():void {
-      inviteUserIntoVoiceConf("16132765252", "Richard Calling", "18773990501");
-    }
-    
+        
     public function ejectUser(userid:String):void {
       trace("Sending ejectUser. id=[" + userid + "]");
       var message:Object = new Object();

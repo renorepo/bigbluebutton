@@ -50,6 +50,7 @@ package org.bigbluebutton.main.model.users
 	import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
 	import org.bigbluebutton.main.model.users.events.RoleChangeEvent;
 	import org.bigbluebutton.main.model.users.events.UsersConnectionEvent;
+	import org.bigbluebutton.modules.users.events.InviteUserIntoVoiceConfRequest;
 	import org.bigbluebutton.modules.users.services.MessageReceiver;
 	import org.bigbluebutton.modules.users.services.MessageSender;
 
@@ -229,6 +230,11 @@ package org.bigbluebutton.main.model.users
       sender.assignPresenter(assignTo, name, 1);
 		}
 
+    public function inviteUserIntoVoiceConference(command:InviteUserIntoVoiceConfRequest):void {
+      var dialNumber: String = UsersUtil.getDialNumber();
+      sender.inviteUserIntoVoiceConf(command.userNumber, command.callerName, dialNumber);		
+    }
+    
     public function muteUnmuteUser(command:VoiceConfEvent):void {
       sender.muteUnmuteUser(command.userid, command.mute);		
     }

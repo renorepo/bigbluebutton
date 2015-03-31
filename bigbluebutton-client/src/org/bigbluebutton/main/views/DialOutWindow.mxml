@@ -21,7 +21,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 				xmlns:mate="http://mate.asfusion.com/"
-				width="700" height="350" 
+				width="500" height="270" 
 				initialize="onCreationComplete()" 
 				styleName="micSettingsWindowStyle"
 				showCloseButton="false">
@@ -29,10 +29,8 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 	
 	<mx:Script>
 		<![CDATA[
-      import com.asfusion.mate.events.Dispatcher;
-      
-      import mx.managers.PopUpManager;
-      
+      import com.asfusion.mate.events.Dispatcher;     
+      import mx.managers.PopUpManager;     
       import org.bigbluebutton.core.UsersUtil;
       import org.bigbluebutton.core.managers.UserManager;
       import org.bigbluebutton.core.model.MeetingModel;
@@ -42,6 +40,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
       import org.bigbluebutton.main.model.users.Conference;
       import org.bigbluebutton.modules.phone.PhoneOptions;
       import org.bigbluebutton.modules.phone.events.DialOutWindowEvent;
+      import org.bigbluebutton.modules.users.events.InviteUserIntoVoiceConfRequest;
       import org.bigbluebutton.util.i18n.ResourceUtil;
 			
 			private var phoneOptions:PhoneOptions = new PhoneOptions;
@@ -52,13 +51,24 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
       private function onCreationComplete():void {
 
       }
-					
+			
+      private function onInviteClicked():void {
+        var dispatcher:Dispatcher = new Dispatcher();
+        dispatcher.dispatchEvent(new InviteUserIntoVoiceConfRequest("16135551234", "BigBlueButton"));  
+        
+        closeWindow();
+      }
+      
       private function onCancelClicked():void {
         trace(LOG + "Cancel clicked");
-        var dispatcher:Dispatcher = new Dispatcher();
+        closeWindow();
+      }
+      
+      private function closeWindow():void {
+        var dispatcher:Dispatcher = new Dispatcher();       
         dispatcher.dispatchEvent(new DialOutWindowEvent(DialOutWindowEvent.DIAL_OUT_WINDOW_CLOSED));
-				
-        PopUpManager.removePopUp(this);
+        
+        PopUpManager.removePopUp(this);        
       }
 			
 		]]>
@@ -72,8 +82,25 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 						 width="100%" height="100%" />
 		</mx:HBox>
 		<mx:HRule width="100%" />
+    <mx:VBox width="100%" height="60">
+      <mx:Label text="{ResourceUtil.getInstance().getString('bbb.phone.dialoutwindow.enterNumber.label')}" 
+                accessibilityName="{ResourceUtil.getInstance().getString('bbb.phone.dialoutwindow.enterNumber.label')}"/>
+      <mx:TextInput id="userNumber"  
+                   editable="true" tabIndex="{baseIndex + 1}"
+                   text="16132765252"
+                   styleName="micSettingsWindowSpeakIntoMicLabelStyle"
+                   width="50%" />
+    </mx:VBox>    
 		<mx:HRule width="100%" />
-		<mx:Button id="cancelBtn" label="{ResourceUtil.getInstance().getString('bbb.micSettings.cancel')}" accessibilityName="{ResourceUtil.getInstance().getString('bbb.micSettings.cancel.toolTip')}"
-				   tabIndex="{baseIndex+3}" click="onCancelClicked()" styleName="micSettingsWindowPlaySoundButtonStyle" />
+    <mx:HBox width="100%" height="60">
+      <mx:Spacer width="90%"/>
+      <mx:Button id="okBtn" label="{ResourceUtil.getInstance().getString('bbb.phone.dialoutwindow.inviteButton')}" 
+                 accessibilityName="{ResourceUtil.getInstance().getString('bbb.phone.dialoutwindow.inviteButton.toolTip')}"
+                 tabIndex="{baseIndex + 3}" click="onInviteClicked()" styleName="micSettingsWindowPlaySoundButtonStyle" />
+      <mx:Button id="cancelBtn" label="{ResourceUtil.getInstance().getString('bbb.phone.dialoutwindow.cancelButton')}" 
+                 accessibilityName="{ResourceUtil.getInstance().getString('bbb.phone.dialoutwindow.cancelButton.toolTip')}"
+                 tabIndex="{baseIndex + 4}" click="onCancelClicked()" styleName="micSettingsWindowPlaySoundButtonStyle" />
+    </mx:HBox>
+
 	</mx:VBox>
 </mx:TitleWindow>
