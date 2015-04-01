@@ -54,7 +54,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
       private function onInviteClicked():void {
         var dispatcher:Dispatcher = new Dispatcher();
-        dispatcher.dispatchEvent(new InviteUserIntoVoiceConfRequest("16135551234", "BigBlueButton"));  
+        dispatcher.dispatchEvent(new InviteUserIntoVoiceConfRequest(userNumber.text));  
         
         closeWindow();
       }

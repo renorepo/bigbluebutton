@@ -232,7 +232,8 @@ package org.bigbluebutton.main.model.users
 
     public function inviteUserIntoVoiceConference(command:InviteUserIntoVoiceConfRequest):void {
       var dialNumber: String = UsersUtil.getDialNumber();
-      sender.inviteUserIntoVoiceConf(command.userNumber, command.callerName, dialNumber);		
+      var callerName: String = UsersUtil.getMyUsername();
+      sender.inviteUserIntoVoiceConf(command.userNumber, callerName, dialNumber);		
     }
     
     public function muteUnmuteUser(command:VoiceConfEvent):void {
