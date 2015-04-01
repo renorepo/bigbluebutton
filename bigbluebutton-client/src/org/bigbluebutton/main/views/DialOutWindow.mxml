@@ -87,7 +87,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
                 accessibilityName="{ResourceUtil.getInstance().getString('bbb.phone.dialoutwindow.enterNumber.label')}"/>
       <mx:TextInput id="userNumber"  
                    editable="true" tabIndex="{baseIndex + 1}"
-                   text="16132765252"
+                   text=""
                    styleName="micSettingsWindowSpeakIntoMicLabelStyle"
                    width="50%" />
     </mx:VBox>    
