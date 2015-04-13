@@ -28,7 +28,9 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 	height="24"
 	toolTip="{ResourceUtil.getInstance().getString('bbb.toolbar.phone.toolTip.dialout')}"
 	implements="org.bigbluebutton.common.IBbbToolbarComponent">
- 
+
+  <mate:Listener type="{DialOutWindowEvent.DIAL_OUT_WINDOW_CLOSED}" method="handleClosedDialOutWindowEvent" />
+  
 	<mx:Script>
 		<![CDATA[
       import com.asfusion.mate.events.Dispatcher;
@@ -41,14 +43,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
       import org.bigbluebutton.main.model.users.Conference;
       import org.bigbluebutton.main.views.MainToolbar;
       import org.bigbluebutton.modules.phone.PhoneOptions;
-      import org.bigbluebutton.modules.phone.events.AudioSelectionWindowEvent;
       import org.bigbluebutton.modules.phone.events.DialOutWindowEvent;
-      import org.bigbluebutton.modules.phone.events.FlashJoinedListenOnlyVoiceConferenceEvent;
-      import org.bigbluebutton.modules.phone.events.FlashJoinedVoiceConferenceEvent;
-      import org.bigbluebutton.modules.phone.events.FlashLeftVoiceConferenceEvent;
-      import org.bigbluebutton.modules.phone.events.JoinVoiceConferenceCommand;
-      import org.bigbluebutton.modules.phone.events.LeaveVoiceConferenceCommand;
-      import org.bigbluebutton.modules.phone.events.WebRTCCallEvent;
       import org.bigbluebutton.util.i18n.ResourceUtil;
 			
       private static const LOG:String = "Phone::DialOutButton - ";
@@ -100,12 +95,12 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			}
 
 		
-			private function handleClosedAudioSelectionWindowEvent(event:AudioSelectionWindowEvent):void {
+			private function handleClosedDialOutWindowEvent(event:DialOutWindowEvent):void {
 				this.selected = false;
 				this.enabled = true;
         trace(LOG + "onClosedAudioSelection enabled=[" + enabled + "] selected=[" + selected + "]");
 				_currentState = DEFAULT_STATE;
-        this.styleName = "voiceConfDefaultButtonStyle";
+        this.styleName = "dialOutDefaultButtonStyle";
 				this.toolTip = ResourceUtil.getInstance().getString('bbb.toolbar.phone.toolTip.start');
 			}
 				
